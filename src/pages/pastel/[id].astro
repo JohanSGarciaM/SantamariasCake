@@ -1,0 +1,22 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+    const cakes = await getCollection("cakes");
+    return cakes.map((cake) => ({
+        params: { id: cake.slug},
+        props: { cake }
+    }))
+}
+
+const { cake }  = Astro.props
+const { data } = cake
+const { title, pieces, img, description, buy } = data
+
+---
+
+<Layout title={`${title} - Dev Cakes`}>
+    <h1>{title}</h1>
+</Layout>
